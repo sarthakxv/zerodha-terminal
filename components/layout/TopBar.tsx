@@ -62,9 +62,16 @@ export default function TopBar({ userInitials }: { userInitials?: string }) {
       <CurrentTime />
 
       {userInitials && (
-        <div className="w-6 h-6 rounded-full bg-[#1a1a1a] border border-border flex items-center justify-center text-text-secondary text-[9px]">
+        <button
+          onClick={async () => {
+            await fetch("/api/auth/logout", { method: "POST" });
+            window.location.href = "/login";
+          }}
+          title="Logout"
+          className="w-6 h-6 rounded-full bg-[#1a1a1a] border border-border flex items-center justify-center text-text-secondary text-[9px] hover:border-accent/50 transition-colors"
+        >
           {userInitials}
-        </div>
+        </button>
       )}
     </header>
   );
