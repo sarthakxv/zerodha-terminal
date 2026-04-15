@@ -50,12 +50,12 @@ export default function SectorAllocation({ holdings }: { holdings: KiteHolding[]
         </div>
         <div className="flex flex-col gap-1.5 flex-1">
           {sectorData.map((s) => (
-            <div key={s.sector} className="flex items-center justify-between text-[10px]">
+            <div key={s.sector} className="flex items-center gap-3 text-[10px]">
               <div className="flex items-center gap-2 text-text-secondary">
-                <span className="w-2 h-2 rounded-sm inline-block" style={{ background: getSectorColor(s.sector) }} />
+                <span className="w-2 h-2 rounded-sm inline-block shrink-0" style={{ background: getSectorColor(s.sector) }} />
                 {s.sector}
               </div>
-              <span className="text-text-primary">{s.pct.toFixed(1)}%</span>
+              <span className="text-text-primary tabular-nums">{s.pct.toFixed(1)}%</span>
             </div>
           ))}
         </div>

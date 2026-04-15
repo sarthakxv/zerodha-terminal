@@ -22,8 +22,10 @@ export default function AnalyticsPage() {
   return (
     <div className="flex flex-col gap-1.5">
       {isError && <ErrorBanner />}
-      <StockConcentration holdings={holdings} />
-      <SectorAllocation holdings={holdings} />
+      <div className="grid grid-cols-2 gap-1.5">
+        <StockConcentration holdings={holdings} />
+        <SectorAllocation holdings={holdings} />
+      </div>
       <DayHeatmap holdings={holdings} />
       <TopGainersLosers holdings={holdings} />
     </div>
