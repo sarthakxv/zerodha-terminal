@@ -80,8 +80,18 @@ async function fetchInstruments(accessToken: string): Promise<ParsedInstrument[]
     },
   });
 
-  if (res.status === 403) throw new KiteSessionExpiredError();
-  if (!res.ok) throw new Error(`Failed to fetch instruments: ${res.status}`);
+  if (!res.ok) {
+    if (res.status === 403) {
+      try {
+        const body = await res.text();
+        const err = JSON.parse(body);
+        if (err.error_type === "TokenException") throw new KiteSessionExpiredError();
+      } catch (e) {
+        if (e instanceof KiteSessionExpiredError) throw e;
+      }
+    }
+    throw new Error(`Failed to fetch instruments: ${res.status}`);
+  }
 
   const csv = await res.text();
   return parseCSV(csv);
@@ -108,8 +118,8 @@ export async function searchInstruments(
       inst.name.toUpperCase().includes(q)
     ) {
       if (
-        (inst.exchange === "NSE" || inst.exchange === "BSE") &&
-        inst.segment.endsWith("EQ")
+        (inst.segment === "NSE" || inst.segment === "BSE") &&
+        (inst.instrument_type === "EQ" || inst.instrument_type === "BE")
       ) {
         results.push(inst);
       }
