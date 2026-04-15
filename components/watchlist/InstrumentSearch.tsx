@@ -45,20 +45,20 @@ export default function InstrumentSearch({ onAdd, existingInstruments }: Instrum
 
   return (
     <div className="relative">
-      <input ref={inputRef} type="text" value={query} onChange={(e) => { setQuery(e.target.value); setIsOpen(true); }} onFocus={() => setIsOpen(true)} placeholder="Search instruments..." className="w-full bg-bg-surface border border-border text-text-primary text-[11px] px-3 py-2 rounded outline-none focus:border-accent/50 placeholder:text-text-dim" />
+      <input ref={inputRef} type="text" value={query} onChange={(e) => { setQuery(e.target.value); setIsOpen(true); }} onFocus={() => setIsOpen(true)} placeholder="Search instruments..." className="w-full bg-bg-surface border border-border text-text-primary text-[12px] px-3 py-2 rounded outline-none focus:border-accent/50 placeholder:text-text-dim" />
       {isOpen && debouncedQuery.length >= 2 && (
         <div ref={dropdownRef} className="absolute top-full left-0 right-0 mt-1 bg-bg-surface border border-border rounded shadow-lg max-h-60 overflow-y-auto z-10">
-          {isLoading && <div className="text-text-dim text-[10px] px-3 py-2 animate-pulse">Searching...</div>}
+          {isLoading && <div className="text-text-dim text-[11px] px-3 py-2 animate-pulse">Searching...</div>}
           {filteredResults?.map((inst) => (
-            <button key={inst.instrument_token} onClick={() => handleSelect(inst)} className="w-full text-left px-3 py-2 text-[11px] hover:bg-border/50 flex items-center justify-between">
+            <button key={inst.instrument_token} onClick={() => handleSelect(inst)} className="w-full text-left px-3 py-2 text-[12px] hover:bg-border/50 flex items-center justify-between">
               <div>
                 <span className="text-text-primary font-medium">{inst.tradingsymbol}</span>
                 <span className="text-text-dim ml-2">{inst.name}</span>
               </div>
-              <span className="text-text-dim text-[9px]">{inst.exchange}</span>
+              <span className="text-text-dim text-[10px]">{inst.exchange}</span>
             </button>
           ))}
-          {filteredResults?.length === 0 && !isLoading && <div className="text-text-dim text-[10px] px-3 py-2">No results found</div>}
+          {filteredResults?.length === 0 && !isLoading && <div className="text-text-dim text-[11px] px-3 py-2">No results found</div>}
         </div>
       )}
     </div>

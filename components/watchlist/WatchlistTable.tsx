@@ -19,7 +19,7 @@ export default function WatchlistTable({ instruments, onRemove }: WatchlistTable
     return (
       <div className="bg-bg-surface-alt border border-border">
         <SectionHeader title="WATCHLIST" subtitle="0 instruments" />
-        <div className="text-text-dim text-[11px] px-3 py-12 text-center">Add instruments to your watchlist using the search bar above</div>
+        <div className="text-text-dim text-[12px] px-3 py-12 text-center">Add instruments to your watchlist using the search bar above</div>
       </div>
     );
   }
@@ -27,7 +27,7 @@ export default function WatchlistTable({ instruments, onRemove }: WatchlistTable
   return (
     <div className="bg-bg-surface-alt border border-border">
       <SectionHeader title="WATCHLIST" subtitle={`${instruments.length} instruments`} />
-      <div className="grid grid-cols-[1.5fr_0.6fr_1fr_1fr_1fr] px-3 py-1.5 text-text-dim text-[10px] uppercase tracking-wider border-b border-[#161616]">
+      <div className="grid grid-cols-[1.5fr_0.6fr_1fr_1fr_1fr] px-3 py-1.5 text-text-dim text-[11px] uppercase tracking-wider border-b border-[#161616]">
         <span>Symbol</span><span>Exchange</span><span className="text-right">LTP</span><span className="text-right">Change</span><span className="text-right">Chg%</span>
       </div>
       {ltpLoading ? (
@@ -43,12 +43,12 @@ export default function WatchlistTable({ instruments, onRemove }: WatchlistTable
           const [exchange, symbol] = inst.split(":");
 
           return (
-            <div key={inst} className="grid grid-cols-[1.5fr_0.6fr_1fr_1fr_1fr] px-3 py-1.5 text-[11px] border-b border-[#111] items-center group">
+            <div key={inst} className="grid grid-cols-[1.5fr_0.6fr_1fr_1fr_1fr] px-3 py-1.5 text-[12px] border-b border-[#111] items-center group">
               <span className="text-text-primary font-medium flex items-center gap-2">
                 {symbol}
-                <button onClick={() => onRemove(inst)} className="opacity-0 group-hover:opacity-100 text-text-dim hover:text-loss text-[10px] transition-opacity" title="Remove">x</button>
+                <button onClick={() => onRemove(inst)} className="opacity-0 group-hover:opacity-100 text-text-dim hover:text-loss text-[11px] transition-opacity" title="Remove">x</button>
               </span>
-              <span className="text-text-dim text-[9px]">{exchange}</span>
+              <span className="text-text-dim text-[10px]">{exchange}</span>
               <span className="text-right text-text-primary">{lastPrice > 0 ? formatCurrencyDecimal(lastPrice) : "---"}</span>
               <span className={`text-right ${pnlColor(change)}`}>{closePrice > 0 ? formatPnl(change) : "---"}</span>
               <span className={`text-right ${pnlColor(changePct)}`}>{closePrice > 0 ? formatPercent(changePct) : "---"}</span>

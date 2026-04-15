@@ -14,7 +14,7 @@ export default function PositionsTable({ positions }: PositionsTableProps) {
   return (
     <div className="bg-bg-surface-alt border border-border">
       <SectionHeader title="POSITIONS" subtitle={`${positions.length} active`} />
-      <div className="grid grid-cols-[1.5fr_0.8fr_0.5fr_1fr_1fr_1fr] px-3 py-1.5 text-text-dim text-[10px] uppercase tracking-wider border-b border-[#161616]">
+      <div className="grid grid-cols-[1.5fr_0.8fr_0.5fr_1fr_1fr_1fr] px-3 py-1.5 text-text-dim text-[11px] uppercase tracking-wider border-b border-[#161616]">
         <span>Symbol</span>
         <span>Product</span>
         <span className="text-right">Qty</span>
@@ -23,9 +23,9 @@ export default function PositionsTable({ positions }: PositionsTableProps) {
         <span className="text-right">M2M</span>
       </div>
       {positions.map((p) => (
-        <div key={p.tradingsymbol + p.exchange + p.product} className={`grid grid-cols-[1.5fr_0.8fr_0.5fr_1fr_1fr_1fr] px-3 py-1.5 text-[11px] border-b border-[#111] items-center ${p.pnl < 0 ? "bg-loss-row" : ""}`}>
+        <div key={p.tradingsymbol + p.exchange + p.product} className={`grid grid-cols-[1.5fr_0.8fr_0.5fr_1fr_1fr_1fr] px-3 py-1.5 text-[12px] border-b border-[#111] items-center ${p.pnl < 0 ? "bg-loss-row" : ""}`}>
           <span className="text-text-primary font-medium">{p.tradingsymbol}</span>
-          <span className="text-text-dim text-[10px]">{p.product}</span>
+          <span className="text-text-dim text-[11px]">{p.product}</span>
           <span className="text-right text-text-secondary">{p.quantity}</span>
           <span className="text-right text-text-primary">{formatCurrencyDecimal(p.last_price)}</span>
           <span className={`text-right ${pnlColor(p.pnl)}`}>{formatPnl(p.pnl)}</span>

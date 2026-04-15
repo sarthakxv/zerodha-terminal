@@ -9,7 +9,7 @@ export default function MarketStatus() {
 
   return (
     <span
-      className={`text-[10px] font-medium px-2 py-0.5 rounded ${
+      className={`text-[11px] font-medium px-2 py-0.5 rounded ${
         status === "pre-open"
           ? "bg-accent/10 text-accent"
           : "bg-loss/10 text-loss"

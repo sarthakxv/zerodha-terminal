@@ -18,8 +18,8 @@ export default function DayHeatmap({ holdings }: { holdings: KiteHolding[] }) {
           const borderColor = isPositive ? `rgba(51, 204, 102, ${0.08 + intensity * 0.15})` : `rgba(255, 68, 68, ${0.08 + intensity * 0.15})`;
           return (
             <div key={h.tradingsymbol} className="rounded p-2 text-center" style={{ background: bg, border: `1px solid ${borderColor}` }}>
-              <div className="text-text-primary text-[10px] font-medium">{h.tradingsymbol}</div>
-              <div className={`text-[11px] font-bold ${isPositive ? "text-profit" : "text-loss"}`}>{pct >= 0 ? "+" : ""}{pct.toFixed(1)}%</div>
+              <div className="text-text-primary text-[11px] font-medium">{h.tradingsymbol}</div>
+              <div className={`text-[12px] font-bold ${isPositive ? "text-profit" : "text-loss"}`}>{pct >= 0 ? "+" : ""}{pct.toFixed(1)}%</div>
             </div>
           );
         })}

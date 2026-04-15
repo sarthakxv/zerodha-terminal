@@ -20,7 +20,7 @@ export default function OrdersPage() {
       {hasError && <ErrorBanner />}
       <div className="flex gap-px">
         {(["orders", "trades"] as Tab[]).map((tab) => (
-          <button key={tab} onClick={() => setActiveTab(tab)} className={`px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors ${activeTab === tab ? "bg-bg-surface text-accent border border-border" : "bg-bg-primary text-text-dim border border-transparent hover:text-text-secondary"}`}>{tab}</button>
+          <button key={tab} onClick={() => setActiveTab(tab)} className={`px-4 py-1.5 text-[12px] font-bold uppercase tracking-wider transition-colors ${activeTab === tab ? "bg-bg-surface text-accent border border-border" : "bg-bg-primary text-text-dim border border-transparent hover:text-text-secondary"}`}>{tab}</button>
         ))}
       </div>
       {activeTab === "orders" && <OrdersTable orders={orders.data} isLoading={orders.isLoading} />}

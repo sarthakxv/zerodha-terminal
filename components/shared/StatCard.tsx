@@ -13,11 +13,11 @@ export default function StatCard({
 }) {
   return (
     <div className="flex-1 bg-bg-surface border border-border p-2.5">
-      <div className="text-text-muted text-[10px] uppercase tracking-wider">{label}</div>
-      <div className={`text-[15px] font-medium mt-0.5 ${colorByValue && subValue ? pnlColor(subValue.value) : "text-text-primary"}`}>
+      <div className="text-text-muted text-[11px] uppercase tracking-wider">{label}</div>
+      <div className={`text-[16px] font-medium mt-0.5 ${colorByValue && subValue ? pnlColor(subValue.value) : "text-text-primary"}`}>
         {value}
         {subValue && (
-          <span className={`text-[10px] ml-1.5 ${pnlColor(subValue.value)}`}>{subValue.text}</span>
+          <span className={`text-[11px] ml-1.5 ${pnlColor(subValue.value)}`}>{subValue.text}</span>
         )}
       </div>
     </div>

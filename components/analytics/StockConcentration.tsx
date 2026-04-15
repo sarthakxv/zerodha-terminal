@@ -23,11 +23,11 @@ export default function StockConcentration({ holdings }: { holdings: KiteHolding
       <div className="p-3 flex flex-col gap-2">
         {stocks.map((s, i) => (
           <div key={s.symbol} className="flex items-center gap-2">
-            <span className="text-text-primary text-[11px] font-medium w-20 shrink-0">{s.symbol}</span>
+            <span className="text-text-primary text-[12px] font-medium w-20 shrink-0">{s.symbol}</span>
             <div className="flex-1 bg-[#111] rounded h-4 overflow-hidden">
               <div className={`h-full ${BAR_COLORS[i % BAR_COLORS.length]} rounded`} style={{ width: `${s.pct}%` }} />
             </div>
-            <span className="text-text-secondary text-[10px] w-11 text-right tabular-nums shrink-0">{formatPercent(s.pct).replace("+", "")}</span>
+            <span className="text-text-secondary text-[11px] w-11 text-right tabular-nums shrink-0">{formatPercent(s.pct).replace("+", "")}</span>
           </div>
         ))}
       </div>

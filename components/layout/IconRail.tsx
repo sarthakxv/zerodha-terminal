@@ -98,7 +98,7 @@ export default function IconRail() {
           >
             {item.icon}
             {expanded && (
-              <span className="text-[11px] font-medium whitespace-nowrap">
+              <span className="text-[12px] font-medium whitespace-nowrap">
                 {item.label}
               </span>
             )}
@@ -134,7 +134,7 @@ export default function IconRail() {
           <path d="M9 13v2" />
         </svg>
         {expanded && (
-          <span className="text-[10px] text-accent/40 whitespace-nowrap">
+          <span className="text-[11px] text-accent/40 whitespace-nowrap">
             AI (soon)
           </span>
         )}

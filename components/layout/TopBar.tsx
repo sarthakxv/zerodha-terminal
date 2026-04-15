@@ -5,7 +5,7 @@ import MarketStatus from "@/components/shared/MarketStatus";
 
 function CurrentTime() {
   return (
-    <span className="text-text-dim text-[10px]" suppressHydrationWarning>
+    <span className="text-text-dim text-[11px]" suppressHydrationWarning>
       {new Date().toLocaleTimeString("en-IN", {
         hour: "2-digit",
         minute: "2-digit",
@@ -33,7 +33,7 @@ function AvatarMenu({ initials }: { initials: string }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="w-6 h-6 rounded-full bg-[#1a1a1a] border border-border flex items-center justify-center text-text-secondary text-[9px] hover:border-accent/50 transition-colors"
+        className="w-6 h-6 rounded-full bg-[#1a1a1a] border border-border flex items-center justify-center text-text-secondary text-[10px] hover:border-accent/50 transition-colors"
       >
         {initials}
       </button>
@@ -44,7 +44,7 @@ function AvatarMenu({ initials }: { initials: string }) {
               await fetch("/api/auth/logout", { method: "POST" });
               window.location.href = "/login";
             }}
-            className="w-full text-left px-3 py-2 text-[11px] text-text-secondary hover:text-loss hover:bg-border/30 transition-colors"
+            className="w-full text-left px-3 py-2 text-[12px] text-text-secondary hover:text-loss hover:bg-border/30 transition-colors"
           >
             Logout
           </button>

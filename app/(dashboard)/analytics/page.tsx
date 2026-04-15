@@ -16,7 +16,7 @@ export default function AnalyticsPage() {
   }
 
   if (!holdings || holdings.length === 0) {
-    return <div className="text-text-dim text-[11px] px-3 py-8 text-center">No holdings data for analytics</div>;
+    return <div className="text-text-dim text-[12px] px-3 py-8 text-center">No holdings data for analytics</div>;
   }
 
   return (
