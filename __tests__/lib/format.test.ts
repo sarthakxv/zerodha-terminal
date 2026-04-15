@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { formatPnl, formatPercent, pnlColor, formatCurrency } from "@/lib/format";
+import { formatPnl, formatPercent, pnlColor } from "@/lib/format";
 
 describe("formatPnl", () => {
   it("adds + prefix for positive values", () => {

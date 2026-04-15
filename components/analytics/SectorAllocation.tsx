@@ -27,7 +27,7 @@ export default function SectorAllocation({ holdings }: { holdings: KiteHolding[]
     .map(([sector, value]) => ({ sector, value, pct: totalValue > 0 ? (value / totalValue) * 100 : 0 }))
     .sort((a, b) => b.pct - a.pct);
 
-  let gradientParts: string[] = [];
+  const gradientParts: string[] = [];
   let cumulative = 0;
   sectorData.forEach((s) => {
     const start = cumulative;

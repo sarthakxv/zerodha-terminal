@@ -1,3 +1,5 @@
+import type { KiteHolding, KitePosition, KiteMargins, KiteOrder, KiteTrade } from "./types";
+
 const KITE_API_BASE = "https://api.kite.trade";
 
 export class KiteClient {
@@ -47,23 +49,23 @@ export class KiteClient {
   }
 
   async getHoldings() {
-    return this.request<any[]>("GET", "/portfolio/holdings");
+    return this.request<KiteHolding[]>("GET", "/portfolio/holdings");
   }
 
   async getPositions() {
-    return this.request<{ net: any[]; day: any[] }>("GET", "/portfolio/positions");
+    return this.request<{ net: KitePosition[]; day: KitePosition[] }>("GET", "/portfolio/positions");
   }
 
   async getMargins() {
-    return this.request<any>("GET", "/user/margins");
+    return this.request<KiteMargins>("GET", "/user/margins");
   }
 
   async getOrders() {
-    return this.request<any[]>("GET", "/orders");
+    return this.request<KiteOrder[]>("GET", "/orders");
   }
 
   async getTrades() {
-    return this.request<any[]>("GET", "/trades");
+    return this.request<KiteTrade[]>("GET", "/trades");
   }
 
   async getLTP(instruments: string[]) {

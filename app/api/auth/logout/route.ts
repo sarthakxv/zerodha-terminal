@@ -1,8 +1,7 @@
-import { NextRequest } from "next/server";
 import { getSession } from "@/lib/session";
 import { KiteClient } from "@/lib/kite";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   const session = await getSession();
 
   if (session.accessToken) {

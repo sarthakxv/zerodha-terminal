@@ -37,6 +37,7 @@ yarn-error.log*
 
 # superpowers
 .superpowers/
+docs/notes.md
 
 # claude code
 .claude/
