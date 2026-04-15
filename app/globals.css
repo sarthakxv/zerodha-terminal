@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg-primary: #0a0a0a;
+  --color-bg-surface: #111111;
+  --color-bg-surface-alt: #0e0e0e;
+  --color-border: #1c1c1c;
+  --color-accent: #ff6e00;
+  --color-text-primary: #d4d4d4;
+  --color-text-secondary: #888888;
+  --color-text-muted: #555555;
+  --color-text-dim: #444444;
+  --color-profit: #33cc66;
+  --color-profit-dim: #228844;
+  --color-loss: #ff4444;
+  --color-loss-dim: #aa3333;
+  --color-loss-row: rgba(255, 68, 68, 0.06);
+  --font-mono: var(--font-jetbrains-mono), "SF Mono", "Consolas", monospace;
+}
+
+/* Font loaded via next/font in layout.tsx — no @import needed */
+
+html,
+body {
+  background-color: #0a0a0a;
+  color: #d4d4d4;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbar styling for the terminal look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1c1c1c;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
