@@ -12,7 +12,7 @@ export default function MarketStatus() {
       className={`text-[10px] font-medium px-2 py-0.5 rounded ${
         status === "pre-open"
           ? "bg-accent/10 text-accent"
-          : "bg-text-dim/10 text-text-dim"
+          : "bg-loss/10 text-loss"
       }`}
     >
       {status === "pre-open" ? "PRE-OPEN" : "MARKET CLOSED"}
