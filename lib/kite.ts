@@ -29,12 +29,16 @@ export class KiteClient {
       },
     });
 
-    if (res.status === 403) {
-      throw new KiteSessionExpiredError();
-    }
-
     if (!res.ok) {
       const body = await res.text();
+      if (res.status === 403) {
+        try {
+          const err = JSON.parse(body);
+          if (err.error_type === "TokenException") throw new KiteSessionExpiredError();
+        } catch (e) {
+          if (e instanceof KiteSessionExpiredError) throw e;
+        }
+      }
       throw new KiteAPIError(res.status, body);
     }
 
@@ -73,8 +77,18 @@ export class KiteClient {
       },
     });
 
-    if (res.status === 403) throw new KiteSessionExpiredError();
-    if (!res.ok) throw new KiteAPIError(res.status, await res.text());
+    if (!res.ok) {
+      const body = await res.text();
+      if (res.status === 403) {
+        try {
+          const err = JSON.parse(body);
+          if (err.error_type === "TokenException") throw new KiteSessionExpiredError();
+        } catch (e) {
+          if (e instanceof KiteSessionExpiredError) throw e;
+        }
+      }
+      throw new KiteAPIError(res.status, body);
+    }
 
     const json = await res.json();
     return json.data as Record<string, { instrument_token: number; last_price: number }>;
@@ -91,8 +105,18 @@ export class KiteClient {
       },
     });
 
-    if (res.status === 403) throw new KiteSessionExpiredError();
-    if (!res.ok) throw new KiteAPIError(res.status, await res.text());
+    if (!res.ok) {
+      const body = await res.text();
+      if (res.status === 403) {
+        try {
+          const err = JSON.parse(body);
+          if (err.error_type === "TokenException") throw new KiteSessionExpiredError();
+        } catch (e) {
+          if (e instanceof KiteSessionExpiredError) throw e;
+        }
+      }
+      throw new KiteAPIError(res.status, body);
+    }
 
     const json = await res.json();
     return json.data as Record<
