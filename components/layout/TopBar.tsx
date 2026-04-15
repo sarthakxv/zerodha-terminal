@@ -1,36 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useLTP } from "@/hooks/use-ltp";
-import { formatCurrencyDecimal } from "@/lib/format";
 import MarketStatus from "@/components/shared/MarketStatus";
-
-const INDICES = ["NSE:NIFTY 50", "NSE:NIFTY BANK"];
-
-function IndexTicker({
-  label,
-  data,
-}: {
-  label: string;
-  data?: { last_price: number };
-}) {
-  if (!data) {
-    return (
-      <span className="text-text-dim text-[10px]">
-        {label} <span className="animate-pulse">---</span>
-      </span>
-    );
-  }
-
-  return (
-    <span className="text-text-secondary text-[10px]">
-      {label}{" "}
-      <span className="text-text-primary">
-        {formatCurrencyDecimal(data.last_price)}
-      </span>
-    </span>
-  );
-}
 
 function CurrentTime() {
   return (
@@ -84,16 +55,12 @@ function AvatarMenu({ initials }: { initials: string }) {
 }
 
 export default function TopBar({ userInitials }: { userInitials?: string }) {
-  const { data: ltpData } = useLTP(INDICES);
-
   return (
     <header className="h-9 bg-[#111111] border-b border-border flex items-center px-3 gap-3 shrink-0">
       <span className="text-accent font-bold text-sm tracking-widest">ZT</span>
       <div className="w-px h-4 bg-border" />
 
       <div className="flex gap-4 flex-1">
-        {/*<IndexTicker label="NIFTY" data={ltpData?.["NSE:NIFTY 50"]} />
-        <IndexTicker label="BANKNIFTY" data={ltpData?.["NSE:NIFTY BANK"]} />*/}
         <MarketStatus />
       </div>
 
