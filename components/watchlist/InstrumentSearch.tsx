@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/hooks/use-api";
 import { KiteInstrument } from "@/lib/types";
+import useDebounce from "@/hooks/use-debounce";
 
 interface InstrumentSearchProps {
   onAdd: (instrument: string) => void;
@@ -63,13 +64,4 @@ export default function InstrumentSearch({ onAdd, existingInstruments }: Instrum
       )}
     </div>
   );
-}
-
-function useDebounce(value: string, delay: number): string {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
 }

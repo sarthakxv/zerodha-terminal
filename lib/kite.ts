@@ -69,10 +69,8 @@ export class KiteClient {
   }
 
   async getLTP(instruments: string[]) {
-    const url = new URL("/quote/ltp", KITE_API_BASE);
-    instruments.forEach((inst) => url.searchParams.append("i", inst));
-
-    const res = await fetch(url.toString(), {
+    const qs = instruments.map((i) => `i=${i}`).join("&");
+    const res = await fetch(`${KITE_API_BASE}/quote/ltp?${qs}`, {
       headers: {
         "X-Kite-Version": "3",
         Authorization: `token ${this.apiKey}:${this.accessToken}`,
@@ -97,10 +95,8 @@ export class KiteClient {
   }
 
   async getOHLC(instruments: string[]) {
-    const url = new URL("/quote/ohlc", KITE_API_BASE);
-    instruments.forEach((inst) => url.searchParams.append("i", inst));
-
-    const res = await fetch(url.toString(), {
+    const qs = instruments.map((i) => `i=${i}`).join("&");
+    const res = await fetch(`${KITE_API_BASE}/quote/ohlc?${qs}`, {
       headers: {
         "X-Kite-Version": "3",
         Authorization: `token ${this.apiKey}:${this.accessToken}`,

@@ -14,18 +14,19 @@ function loadFromStorage(): string[] {
 
 export function useWatchlist() {
   const [instruments, setInstruments] = useState<string[]>([]);
-  const hasHydrated = useRef(false);
+  const skipPersist = useRef(true);
 
-  // Load from localStorage after hydration (avoids SSR mismatch)
+  // Load from localStorage after mount (avoids hydration mismatch)
   useEffect(() => {
-    const saved = loadFromStorage();
-    if (saved.length > 0) setInstruments(saved);
-    hasHydrated.current = true;
+    setInstruments(loadFromStorage());
   }, []);
 
-  // Persist to localStorage on changes (skip the initial hydration load)
+  // Persist to localStorage on changes (skip the first render)
   useEffect(() => {
-    if (!hasHydrated.current) return;
+    if (skipPersist.current) {
+      skipPersist.current = false;
+      return;
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(instruments));
   }, [instruments]);
 
