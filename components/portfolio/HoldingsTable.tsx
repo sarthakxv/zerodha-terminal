@@ -77,7 +77,7 @@ export default function HoldingsTable({
             }`}
           >
             <div className="flex items-baseline gap-2 min-w-0">
-              <span className="text-text-display font-medium truncate">
+              <span className="text-text-display font-medium truncate font-sans">
                 {h.tradingsymbol}
               </span>
               <span className="font-mono text-[9px] tracking-[0.14em] uppercase text-text-dim">

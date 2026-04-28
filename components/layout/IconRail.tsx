@@ -98,7 +98,7 @@ export default function IconRail() {
     <nav
       className={`${
         expanded ? "w-48" : "w-12"
-      } bg-bg-primary border-r border-border flex flex-col py-3 shrink-0 transition-[width] duration-200 ease-out`}
+      } font-sans bg-bg-primary border-r border-border flex flex-col py-3 shrink-0 transition-[width] duration-200 ease-out`}
     >
       <button
         onClick={() => setExpanded(!expanded)}
