@@ -84,7 +84,7 @@ export default function TopGainersLosers({
     .sort((a, b) => a.returnPct - b.returnPct);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 font-sans">
       <div className="border border-border bg-bg-surface">
         <SectionHeader
           title="Top gainers"

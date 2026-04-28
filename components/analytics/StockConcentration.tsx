@@ -26,7 +26,7 @@ export default function StockConcentration({
   const top3 = stocks.slice(0, 3).reduce((sum, s) => sum + s.pct, 0);
 
   return (
-    <div className="border border-border bg-bg-surface">
+    <div className="border border-border bg-bg-surface font-sans">
       <SectionHeader
         title="Concentration"
         subtitle="By holding value"

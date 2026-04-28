@@ -16,7 +16,7 @@ function LoginContent() {
     : null;
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-bg-primary text-text-primary">
+    <div className="relative min-h-screen flex flex-col bg-bg-primary text-text-primary font-sans">
       {/* Dot-grid background — the one moment of texture on this page */}
       <div className="absolute inset-0 dot-grid-subtle opacity-40 pointer-events-none" />
 

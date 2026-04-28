@@ -31,7 +31,7 @@ export default function SectorAllocation({
     .sort((a, b) => b.pct - a.pct);
 
   return (
-    <div className="border border-border bg-bg-surface">
+    <div className="border border-border bg-bg-surface font-sans">
       <SectionHeader
         title="Sectors"
         subtitle={`${sectorData.length} segments`}

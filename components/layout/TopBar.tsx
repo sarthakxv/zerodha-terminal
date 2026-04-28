@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import MarketStatus from "@/components/shared/MarketStatus";
+import { getSession } from "@/lib/session";
 
 function CurrentTime() {
   const [time, setTime] = useState<string>("");
@@ -55,7 +56,7 @@ function AvatarMenu({ initials }: { initials: string }) {
         {initials}
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-1.5 bg-bg-surface border border-border-visible min-w-[140px] z-20">
+        <div className="absolute right-0 top-full mt-1.5 bg-bg-surface border border-border-visible min-w-[140px] z-20 font-sans">
           <div className="px-3 py-2 border-b border-border">
             <div className="font-mono text-[9px] tracking-[0.14em] uppercase text-text-muted">
               Account

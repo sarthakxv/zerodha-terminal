@@ -9,7 +9,7 @@ export default function DayHeatmap({ holdings }: { holdings: KiteHolding[] }) {
   );
 
   return (
-    <div className="border border-border bg-bg-surface">
+    <div className="border border-border bg-bg-surface font-sans">
       <SectionHeader title="Today · Heatmap" subtitle="Sorted by day %" />
 
       <div className="p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1">
