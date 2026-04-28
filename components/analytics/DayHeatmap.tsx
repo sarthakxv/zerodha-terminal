@@ -4,22 +4,44 @@ import { KiteHolding } from "@/lib/types";
 import SectionHeader from "@/components/shared/SectionHeader";
 
 export default function DayHeatmap({ holdings }: { holdings: KiteHolding[] }) {
-  const sorted = [...holdings].sort((a, b) => b.day_change_percentage - a.day_change_percentage);
+  const sorted = [...holdings].sort(
+    (a, b) => b.day_change_percentage - a.day_change_percentage
+  );
 
   return (
-    <div className="bg-bg-surface-alt border border-border">
-      <SectionHeader title="TODAY" />
-      <div className="p-2 grid grid-cols-4 gap-1">
+    <div className="border border-border bg-bg-surface font-sans">
+      <SectionHeader title="Today · Heatmap" subtitle="Sorted by day %" />
+
+      <div className="p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1">
         {sorted.map((h) => {
           const pct = h.day_change_percentage;
           const isPositive = pct >= 0;
+          // Opacity ramp: 0% change → minimal tint, 5%+ → strong tint
           const intensity = Math.min(Math.abs(pct) / 5, 1);
-          const bg = isPositive ? `rgba(51, 204, 102, ${0.05 + intensity * 0.2})` : `rgba(255, 68, 68, ${0.05 + intensity * 0.2})`;
-          const borderColor = isPositive ? `rgba(51, 204, 102, ${0.08 + intensity * 0.15})` : `rgba(255, 68, 68, ${0.08 + intensity * 0.15})`;
+          const baseAlpha = 0.06 + intensity * 0.22;
+          const bg = isPositive
+            ? `rgba(74, 158, 92, ${baseAlpha})`
+            : `rgba(215, 25, 33, ${baseAlpha})`;
+
           return (
-            <div key={h.tradingsymbol} className="rounded p-2 text-center" style={{ background: bg, border: `1px solid ${borderColor}` }}>
-              <div className="text-text-primary text-[11px] font-medium">{h.tradingsymbol}</div>
-              <div className={`text-[12px] font-bold ${isPositive ? "text-profit" : "text-loss"}`}>{pct >= 0 ? "+" : ""}{pct.toFixed(1)}%</div>
+            <div
+              key={h.tradingsymbol}
+              className="border border-border-visible/60 px-2.5 py-3 flex flex-col gap-1"
+              style={{ background: bg }}
+              title={`${h.tradingsymbol} ${pct.toFixed(2)}%`}
+            >
+              <span className="text-text-display text-[11px] font-medium truncate">
+                {h.tradingsymbol}
+              </span>
+              <span
+                className={`font-mono text-[12px] tabular-nums ${
+                  isPositive ? "text-profit" : "text-accent"
+                }`}
+              >
+                {pct >= 0 ? "+" : ""}
+                {pct.toFixed(2)}
+                <span className="text-[9px] ml-0.5">%</span>
+              </span>
             </div>
           );
         })}

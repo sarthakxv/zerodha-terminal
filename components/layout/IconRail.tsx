@@ -7,44 +7,84 @@ import { useState } from "react";
 const NAV_ITEMS = [
   {
     label: "Portfolio",
+    code: "01",
     href: "/portfolio",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="3" y="6" width="18" height="14" />
+        <path d="M3 10h18" />
+        <path d="M9 6V4h6v2" />
       </svg>
     ),
   },
   {
     label: "Watchlist",
+    code: "02",
     href: "/watchlist",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <circle cx="12" cy="12" r="3" />
+        <path d="M2 12c2.5-4.5 6-7 10-7s7.5 2.5 10 7c-2.5 4.5-6 7-10 7s-7.5-2.5-10-7Z" />
       </svg>
     ),
   },
   {
     label: "Orders",
+    code: "03",
     href: "/orders",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 3h5v5" />
-        <path d="M8 3H3v5" />
-        <path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3" />
-        <path d="m15 9 6-6" />
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 4h16v16H4z" />
+        <path d="M8 9h8" />
+        <path d="M8 13h5" />
+        <path d="M8 17h3" />
       </svg>
     ),
   },
   {
     label: "Analytics",
+    code: "04",
     href: "/analytics",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M3 3v18h18" />
-        <path d="m19 9-5 5-4-4-3 3" />
+        <path d="M7 14l4-4 3 3 5-6" />
       </svg>
     ),
   },
@@ -57,14 +97,14 @@ export default function IconRail() {
   return (
     <nav
       className={`${
-        expanded ? "w-40" : "w-10"
-      } bg-[#0d0d0d] border-r border-border flex flex-col py-3 gap-1 shrink-0 transition-[width] duration-150`}
+        expanded ? "w-48" : "w-12"
+      } bg-bg-primary border-r border-border flex flex-col py-3 shrink-0 transition-[width] duration-200 ease-out`}
     >
-      {/* Toggle button */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="mx-auto w-7 h-7 rounded flex items-center justify-center text-text-dim hover:text-text-secondary transition-colors mb-1"
+        className="mx-auto w-7 h-7 flex items-center justify-center text-text-dim hover:text-text-secondary transition-colors mb-4"
         title={expanded ? "Collapse" : "Expand"}
+        aria-label={expanded ? "Collapse navigation" : "Expand navigation"}
       >
         <svg
           width="14"
@@ -72,47 +112,73 @@ export default function IconRail() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={`transition-transform duration-150 ${expanded ? "rotate-180" : ""}`}
+          className={`transition-transform duration-200 ${
+            expanded ? "rotate-180" : ""
+          }`}
         >
           <path d="m9 18 6-6-6-6" />
         </svg>
       </button>
 
-      {NAV_ITEMS.map((item) => {
-        const isActive = pathname.startsWith(item.href);
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            title={expanded ? undefined : item.label}
-            className={`mx-1.5 h-8 rounded flex items-center gap-2.5 transition-colors ${
-              expanded ? "px-2.5" : "justify-center"
-            } ${
-              isActive
-                ? "bg-accent text-black"
-                : "text-text-muted hover:text-text-secondary"
-            }`}
-          >
-            {item.icon}
-            {expanded && (
-              <span className="text-[12px] font-medium whitespace-nowrap">
-                {item.label}
-              </span>
-            )}
-          </Link>
-        );
-      })}
+      {expanded && (
+        <div className="px-3 mb-3">
+          <span className="font-mono text-[9px] tracking-[0.16em] uppercase text-text-muted">
+            Navigation
+          </span>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-0.5">
+        {NAV_ITEMS.map((item) => {
+          const isActive = pathname.startsWith(item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              title={expanded ? undefined : item.label}
+              className={`group relative mx-2 h-9 flex items-center transition-colors ${
+                expanded ? "px-2.5 gap-3" : "justify-center"
+              } ${
+                isActive
+                  ? "text-text-display"
+                  : "text-text-muted hover:text-text-secondary"
+              }`}
+            >
+              {isActive && (
+                <span className="absolute left-[-8px] top-1/2 -translate-y-1/2 w-[2px] h-5 bg-accent" />
+              )}
+
+              <span>{item.icon}</span>
+
+              {expanded && (
+                <div className="flex-1 flex items-baseline justify-between min-w-0">
+                  <span
+                    className={`text-[13px] truncate ${
+                      isActive ? "text-text-display" : ""
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                  <span className="font-mono text-[9px] tracking-[0.14em] text-text-dim">
+                    {item.code}
+                  </span>
+                </div>
+              )}
+            </Link>
+          );
+        })}
+      </div>
 
       <div className="flex-1" />
 
-      {/* AI — disabled in MVP */}
+      {/* AI — disabled */}
       <div
         title="AI Co-pilot (coming soon)"
-        className={`mx-1.5 h-8 rounded border border-border flex items-center gap-2.5 cursor-not-allowed ${
-          expanded ? "px-2.5" : "justify-center"
+        className={`mx-2 h-9 border border-border flex items-center cursor-not-allowed ${
+          expanded ? "px-2.5 gap-3" : "justify-center"
         }`}
       >
         <svg
@@ -121,22 +187,23 @@ export default function IconRail() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-accent/40"
+          className="text-text-dim"
         >
-          <path d="M12 8V4H8" />
-          <rect width="16" height="12" x="4" y="8" rx="2" />
-          <path d="M2 14h2" />
-          <path d="M20 14h2" />
-          <path d="M15 13v2" />
-          <path d="M9 13v2" />
+          <circle cx="12" cy="12" r="9" />
+          <path d="M8 12h.01" />
+          <path d="M12 12h.01" />
+          <path d="M16 12h.01" />
         </svg>
         {expanded && (
-          <span className="text-[11px] text-accent/40 whitespace-nowrap">
-            AI (soon)
-          </span>
+          <div className="flex-1 flex items-baseline justify-between min-w-0">
+            <span className="text-[12px] text-text-dim truncate">Copilot</span>
+            <span className="font-mono text-[9px] tracking-[0.14em] text-text-dim">
+              SOON
+            </span>
+          </div>
         )}
       </div>
     </nav>
