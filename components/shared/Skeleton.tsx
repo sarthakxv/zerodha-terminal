@@ -1,41 +1,60 @@
-const SKELETON_WIDTHS = [64, 48, 72, 56, 60, 44, 68, 52];
+/**
+ * Per the Nothing design system: NO pulsing skeleton screens.
+ * Loading states are mechanical text — `[LOADING…]` — that reads like
+ * an instrument-panel readout. The same components are kept (with the
+ * same export names) for backwards compatibility with callers.
+ */
 
-export function SkeletonRow({ cols = 6 }: { cols?: number }) {
+function LoadingText({ label = "LOADING" }: { label?: string }) {
   return (
-    <div className="flex gap-4 px-3 py-2">
-      {Array.from({ length: cols }).map((_, i) => (
-        <div
-          key={i}
-          className="h-3 bg-border rounded animate-pulse"
-          style={{ width: `${SKELETON_WIDTHS[i % SKELETON_WIDTHS.length]}px` }}
-        />
-      ))}
+    <span
+      className="font-mono text-[10px] tracking-[0.18em] uppercase text-text-muted blink"
+      aria-busy="true"
+      aria-live="polite"
+    >
+      [{label}…]
+    </span>
+  );
+}
+
+export function SkeletonRow({ cols }: { cols?: number }) {
+  // cols accepted for API compatibility but unused — the new pattern is
+  // a single readout, not per-column shimmer
+  void cols;
+  return (
+    <div className="px-4 py-6 flex items-center justify-center">
+      <LoadingText />
     </div>
   );
 }
 
-export function SkeletonTable({ rows = 5, cols = 6 }: { rows?: number; cols?: number }) {
+export function SkeletonTable({
+  rows,
+  cols,
+}: {
+  rows?: number;
+  cols?: number;
+}) {
+  void rows;
+  void cols;
   return (
-    <div className="flex flex-col gap-1">
-      {Array.from({ length: rows }).map((_, i) => (
-        <SkeletonRow key={i} cols={cols} />
-      ))}
+    <div className="px-4 py-12 flex items-center justify-center">
+      <LoadingText />
     </div>
   );
 }
 
 export function SkeletonCard() {
   return (
-    <div className="bg-bg-surface border border-border p-3 flex flex-col gap-2">
-      <div className="h-2 w-16 bg-border rounded animate-pulse" />
-      <div className="h-5 w-24 bg-border rounded animate-pulse" />
+    <div className="flex-1 bg-bg-surface border-r border-border last:border-r-0 px-4 py-5 flex items-center justify-center min-h-[80px]">
+      <LoadingText />
     </div>
   );
 }
 
 export function SkeletonStrip({ cards = 5 }: { cards?: number }) {
   return (
-    <div className="flex gap-px">
+    <div className="flex border border-border bg-bg-surface">
       {Array.from({ length: cards }).map((_, i) => (
         <SkeletonCard key={i} />
       ))}

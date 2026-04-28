@@ -1,48 +1,186 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg-primary: #0a0a0a;
-  --color-bg-surface: #111111;
-  --color-bg-surface-alt: #0e0e0e;
-  --color-border: #1c1c1c;
-  --color-accent: #ff6e00;
-  --color-text-primary: #d4d4d4;
-  --color-text-secondary: #888888;
-  --color-text-muted: #555555;
-  --color-text-dim: #444444;
-  --color-profit: #33cc66;
-  --color-profit-dim: #228844;
-  --color-loss: #ff4444;
-  --color-loss-dim: #aa3333;
-  --color-loss-row: rgba(255, 68, 68, 0.06);
-  --color-profit-row: rgba(51, 204, 102, 0.06);
-  --font-mono: var(--font-jetbrains-mono), "SF Mono", "Consolas", monospace;
+  /* ============================================================
+   * NOTHING-INSPIRED DESIGN SYSTEM
+   * Dark mode (OLED). Monochrome canvas; red is an interrupt.
+   * ============================================================ */
+
+  /* === Surfaces === */
+  --color-bg-primary: #000000;          /* OLED black canvas */
+  --color-bg-surface: #0d0d0d;          /* cards, side rails */
+  --color-bg-surface-alt: #0a0a0a;      /* table containers */
+  --color-bg-raised: #161616;           /* secondary elevation */
+
+  /* === Borders === */
+  --color-border: #1c1c1c;              /* hairline dividers */
+  --color-border-visible: #2a2a2a;      /* intentional outlines */
+  --color-border-strong: #3a3a3a;       /* hover / focus */
+
+  /* === Text scale (gray = hierarchy) === */
+  --color-text-display: #ffffff;        /* hero numbers — one per screen */
+  --color-text-primary: #e8e8e8;        /* body, table values */
+  --color-text-secondary: #999999;      /* labels, captions */
+  --color-text-muted: #666666;          /* metadata, hints */
+  --color-text-dim: #444444;            /* disabled, decorative */
+
+  /* === Accent (Nothing red — signal, not decoration) === */
+  --color-accent: #d71921;
+  --color-accent-soft: rgba(215, 25, 33, 0.12);
+  --color-accent-line: rgba(215, 25, 33, 0.30);
+
+  /* === Data status (semantic data colors) === */
+  --color-profit: #4a9e5c;              /* in-range / good */
+  --color-profit-dim: #2e6238;
+  --color-profit-row: rgba(74, 158, 92, 0.04);
+  --color-loss: #d71921;                /* over-limit / bad — same hue as accent */
+  --color-loss-dim: #8b1015;
+  --color-loss-row: rgba(215, 25, 33, 0.04);
+  --color-warning: #d4a843;
+
+  /* === Fonts ===
+   * Display: Doto (variable dot-matrix) — Nothing's NDot analogue
+   * Sans:    Space Grotesk — body, UI, headings
+   * Mono:    Space Mono — data, ALL CAPS labels
+   */
+  --font-display: var(--font-doto), "Space Mono", monospace;
+  --font-sans: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-space-mono), "JetBrains Mono", "SF Mono", monospace;
 }
 
-/* Font loaded via next/font in layout.tsx — no @import needed */
+/* ============================================================
+ * BASE
+ * ============================================================ */
 
 html,
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "ss02";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Numbers: tabular figures everywhere — non-negotiable for trading data */
+* {
   font-variant-numeric: tabular-nums;
 }
 
-/* Scrollbar styling for the terminal look */
+/* ============================================================
+ * SCROLLBAR — invisible until needed (Nothing minimalism)
+ * ============================================================ */
+
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-primary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 3px;
+  background: var(--color-border-visible);
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333;
+  background: var(--color-border-strong);
+}
+
+/* ============================================================
+ * SELECTION — accent red as signal
+ * ============================================================ */
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-text-display);
+}
+
+/* ============================================================
+ * UTILITY: dot-matrix grid background
+ * Use sparingly — hero areas, empty states.
+ * ============================================================ */
+
+.dot-grid {
+  background-image: radial-gradient(
+    circle,
+    var(--color-border-strong) 1px,
+    transparent 1px
+  );
+  background-size: 16px 16px;
+}
+
+.dot-grid-subtle {
+  background-image: radial-gradient(
+    circle,
+    var(--color-border) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 12px 12px;
+}
+
+/* ============================================================
+ * UTILITY: ALL CAPS monospace label
+ * Per the system: tertiary tier — labels are always Space Mono caps.
+ * ============================================================ */
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.label-mono-sm {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* ============================================================
+ * UTILITY: display number (Doto)
+ * One per screen. The "moment of surprise."
+ * ============================================================ */
+
+.display-number {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--color-text-display);
+}
+
+/* ============================================================
+ * UTILITY: data number (Space Mono)
+ * For every numeric value in tables, rows, cards.
+ * ============================================================ */
+
+.data-num {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+}
+
+/* ============================================================
+ * KEYFRAMES — mechanical, percussive (no spring/bounce)
+ * ============================================================ */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.blink {
+  animation: blink 1.2s steps(2, end) infinite;
+}
+
+@keyframes tick {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }

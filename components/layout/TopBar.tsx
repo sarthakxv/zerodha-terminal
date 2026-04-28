@@ -4,15 +4,32 @@ import { useState, useRef, useEffect } from "react";
 import MarketStatus from "@/components/shared/MarketStatus";
 
 function CurrentTime() {
+  const [time, setTime] = useState<string>("");
+
+  useEffect(() => {
+    function update() {
+      setTime(
+        new Date().toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Kolkata",
+        })
+      );
+    }
+    update();
+    const id = setInterval(update, 1000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <span className="text-text-dim text-[11px]" suppressHydrationWarning>
-      {new Date().toLocaleTimeString("en-IN", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-        timeZone: "Asia/Kolkata",
-      })}{" "}
-      IST
+    <span
+      className="font-mono text-[10px] tracking-[0.12em] text-text-secondary"
+      suppressHydrationWarning
+    >
+      {time || "--:--:--"}
+      <span className="text-text-muted ml-1.5">IST</span>
     </span>
   );
 }
@@ -33,20 +50,28 @@ function AvatarMenu({ initials }: { initials: string }) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="w-6 h-6 rounded-full bg-[#1a1a1a] border border-border flex items-center justify-center text-text-secondary text-[10px] hover:border-accent/50 transition-colors"
+        className="w-7 h-7 border border-border-visible flex items-center justify-center font-mono text-[10px] tracking-wider text-text-secondary hover:border-border-strong hover:text-text-primary transition-colors"
       >
         {initials}
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-1 bg-bg-surface border border-border rounded shadow-lg z-20 min-w-[120px]">
+        <div className="absolute right-0 top-full mt-1.5 bg-bg-surface border border-border-visible min-w-[140px] z-20">
+          <div className="px-3 py-2 border-b border-border">
+            <div className="font-mono text-[9px] tracking-[0.14em] uppercase text-text-muted">
+              Account
+            </div>
+            <div className="text-text-primary text-[12px] mt-0.5">
+              {initials}
+            </div>
+          </div>
           <button
             onClick={async () => {
               await fetch("/api/auth/logout", { method: "POST" });
               window.location.href = "/login";
             }}
-            className="w-full text-left px-3 py-2 text-[12px] text-text-secondary hover:text-loss hover:bg-border/30 transition-colors"
+            className="w-full text-left px-3 py-2 font-mono text-[10px] tracking-[0.12em] uppercase text-text-secondary hover:text-accent transition-colors"
           >
-            Logout
+            Sign out
           </button>
         </div>
       )}
@@ -56,11 +81,23 @@ function AvatarMenu({ initials }: { initials: string }) {
 
 export default function TopBar({ userInitials }: { userInitials?: string }) {
   return (
-    <header className="h-9 bg-[#111111] border-b border-border flex items-center px-3 gap-3 shrink-0">
-      <span className="text-accent font-bold text-sm tracking-widest">ZT</span>
-      <div className="w-px h-4 bg-border" />
+    <header className="h-11 bg-bg-primary border-b border-border flex items-center px-4 gap-5 shrink-0">
+      {/* Wordmark — Doto, the one expressive moment in the chrome */}
+      <div className="flex items-baseline gap-2.5">
+        <span
+          className="font-display text-[22px] font-bold tracking-[-0.02em] text-text-display leading-none"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          ZT
+        </span>
+        <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-text-muted">
+          Terminal
+        </span>
+      </div>
 
-      <div className="flex gap-4 flex-1">
+      <div className="w-px h-4 bg-border-visible" />
+
+      <div className="flex items-center gap-3 flex-1">
         <MarketStatus />
       </div>
 

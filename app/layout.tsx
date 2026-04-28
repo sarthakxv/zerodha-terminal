@@ -1,11 +1,26 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Space_Mono, Doto } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/components/providers/QueryProvider";
 
-const jetbrainsMono = JetBrains_Mono({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-space-grotesk",
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  variable: "--font-space-mono",
+  weight: ["400", "700"],
+  display: "swap",
+});
+
+const doto = Doto({
+  subsets: ["latin"],
+  variable: "--font-doto",
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
@@ -21,7 +36,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} font-mono bg-bg-primary text-text-primary antialiased`}>
+      <body
+        className={`${spaceGrotesk.variable} ${spaceMono.variable} ${doto.variable} font-sans bg-bg-primary text-text-primary antialiased`}
+      >
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
