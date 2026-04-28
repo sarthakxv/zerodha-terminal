@@ -13,9 +13,7 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
-  const initials = session.userShortname
-    ? session.userShortname.slice(0, 2).toUpperCase()
-    : "ZT";
-
-  return <AppShell userInitials={initials}>{children}</AppShell>;
+  return (
+    <AppShell userName={session.userName ?? ""}>{children}</AppShell>
+  );
 }

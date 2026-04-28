@@ -7,16 +7,16 @@ import { useAuth } from "@/components/providers/QueryProvider";
 
 export default function AppShell({
   children,
-  userInitials,
+  userName,
 }: {
   children: React.ReactNode;
-  userInitials?: string;
+  userName?: string;
 }) {
   const { isSessionExpired } = useAuth();
 
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-bg-primary">
-      <TopBar userInitials={userInitials} />
+      <TopBar userName={userName} />
       <div className="flex flex-1 overflow-hidden">
         <IconRail />
         <main className="flex-1 overflow-y-auto">
