@@ -7,34 +7,91 @@ import { SkeletonTable } from "@/components/shared/Skeleton";
 
 const STATUS_COLORS: Record<string, string> = {
   COMPLETE: "text-profit",
-  REJECTED: "text-loss",
-  CANCELLED: "text-text-dim",
-  OPEN: "text-accent",
-  "TRIGGER PENDING": "text-accent",
+  REJECTED: "text-accent",
+  CANCELLED: "text-text-muted",
+  OPEN: "text-warning",
+  "TRIGGER PENDING": "text-warning",
 };
 
-export default function OrdersTable({ orders, isLoading }: { orders?: KiteOrder[]; isLoading: boolean }) {
+const COLS = "grid-cols-[0.9fr_1.4fr_0.6fr_0.5fr_1fr_0.9fr]";
+
+export default function OrdersTable({
+  orders,
+  isLoading,
+}: {
+  orders?: KiteOrder[];
+  isLoading: boolean;
+}) {
   if (isLoading) {
-    return (<div className="bg-bg-surface-alt border border-border"><SectionHeader title="ORDERS" /><SkeletonTable rows={3} cols={6} /></div>);
+    return (
+      <div className="border border-border bg-bg-surface">
+        <SectionHeader title="Orders" />
+        <SkeletonTable />
+      </div>
+    );
   }
+
   if (!orders || orders.length === 0) {
-    return (<div className="bg-bg-surface-alt border border-border"><SectionHeader title="ORDERS" subtitle="0 today" /><div className="text-text-dim text-[12px] px-3 py-8 text-center">No orders today</div></div>);
+    return (
+      <div className="border border-border bg-bg-surface">
+        <SectionHeader title="Orders" subtitle="None" />
+        <div className="py-16 text-center">
+          <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-text-muted">
+            No orders today
+          </span>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="bg-bg-surface-alt border border-border">
-      <SectionHeader title="ORDERS" subtitle={`${orders.length} today`} />
-      <div className="grid grid-cols-[0.8fr_1.2fr_0.6fr_0.5fr_1fr_0.8fr] px-3 py-1.5 text-text-dim text-[11px] uppercase tracking-wider border-b border-[#161616]">
-        <span>Time</span><span>Symbol</span><span>Type</span><span className="text-right">Qty</span><span className="text-right">Price</span><span className="text-right">Status</span>
+    <div className="border border-border bg-bg-surface">
+      <SectionHeader title="Orders" subtitle={`${orders.length} today`} />
+
+      <div
+        className={`grid ${COLS} px-4 py-2.5 border-b border-border font-mono text-[9px] tracking-[0.16em] uppercase text-text-muted`}
+      >
+        <span>Time</span>
+        <span>Symbol</span>
+        <span>Side</span>
+        <span className="text-right">Qty</span>
+        <span className="text-right">Price</span>
+        <span className="text-right">Status</span>
       </div>
-      {orders.map((o) => (
-        <div key={o.order_id} className="grid grid-cols-[0.8fr_1.2fr_0.6fr_0.5fr_1fr_0.8fr] px-3 py-1.5 text-[12px] border-b border-[#111] items-center">
-          <span className="text-text-secondary">{formatTime(o.order_timestamp)}</span>
-          <span className="text-text-primary font-medium">{o.tradingsymbol}</span>
-          <span className={o.transaction_type === "BUY" ? "text-profit" : "text-loss"}>{o.transaction_type}</span>
-          <span className="text-right text-text-secondary">{o.quantity}</span>
-          <span className="text-right text-text-primary">{formatCurrencyDecimal(o.average_price || o.price)}</span>
-          <span className={`text-right ${STATUS_COLORS[o.status] || "text-text-secondary"}`}>{o.status}</span>
+
+      {orders.map((o, i) => (
+        <div
+          key={o.order_id}
+          className={`grid ${COLS} px-4 py-3 items-center text-[13px] hover:bg-bg-raised/40 transition-colors ${
+            i !== orders.length - 1 ? "border-b border-border" : ""
+          }`}
+        >
+          <span className="font-mono text-[11px] text-text-secondary">
+            {formatTime(o.order_timestamp)}
+          </span>
+          <span className="text-text-display font-medium truncate">
+            {o.tradingsymbol}
+          </span>
+          <span
+            className={`font-mono text-[10px] tracking-[0.14em] uppercase ${
+              o.transaction_type === "BUY" ? "text-profit" : "text-accent"
+            }`}
+          >
+            {o.transaction_type}
+          </span>
+          <span className="text-right font-mono text-text-secondary text-[12px]">
+            {o.quantity}
+          </span>
+          <span className="text-right font-mono text-text-primary text-[12px]">
+            {formatCurrencyDecimal(o.average_price || o.price)}
+          </span>
+          <span
+            className={`text-right font-mono text-[10px] tracking-[0.14em] uppercase ${
+              STATUS_COLORS[o.status] ?? "text-text-secondary"
+            }`}
+          >
+            {o.status}
+          </span>
         </div>
       ))}
     </div>
