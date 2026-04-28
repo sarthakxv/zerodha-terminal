@@ -39,11 +39,13 @@
   --color-warning: #d4a843;
 
   /* === Fonts ===
-   * Display: Doto (variable dot-matrix) — Nothing's NDot analogue
+   * Display: Doto (variable dot-matrix) — Nothing's NDot analogue.
+   *          Loaded via Google Fonts <link> in app/layout.tsx because
+   *          next/font's Doto subset is currently broken (U+?? range).
    * Sans:    Space Grotesk — body, UI, headings
    * Mono:    Space Mono — data, ALL CAPS labels
    */
-  --font-display: var(--font-doto), "Space Mono", monospace;
+  --font-display: "Doto", "Space Mono", monospace;
   --font-sans: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-space-mono), "JetBrains Mono", "SF Mono", monospace;
 }
