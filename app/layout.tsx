@@ -17,11 +17,12 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
-// Doto is loaded via direct Google Fonts <link> below.
-// next/font/google currently emits an invalid unicode-range (U+??) for Doto's
-// primary subset, so basic Latin (A–Z, 0–9) isn't covered and the browser
-// silently falls back to the next font in the chain. Loading via Google Fonts
-// CSS bypasses that and gives us the proper variable-axis @font-face set.
+// Doto (display face) is loaded via a direct Google Fonts <link> below
+// because next/font/google currently emits an invalid unicode-range for
+// Doto that excludes basic Latin (A–Z, 0–9). The eslint
+// `no-page-custom-font` rule is a false positive in the App Router —
+// app/layout.tsx IS the root layout (the App Router equivalent of
+// pages/_document.js), so the font loads globally for every route.
 
 export const metadata: Metadata = {
   title: "ZT — Zerodha Terminal",
@@ -42,6 +43,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap"
           rel="stylesheet"
