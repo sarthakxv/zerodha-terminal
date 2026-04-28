@@ -6,7 +6,9 @@ import SectionHeader from "@/components/shared/SectionHeader";
 
 type RankedHolding = KiteHolding & { returnPct: number };
 
-function RankTable({
+const COLS = "grid-cols-[0.4fr_1.4fr_0.9fr_1.1fr]";
+
+function RankedList({
   rows,
   variant,
   emptyLabel,
@@ -16,57 +18,91 @@ function RankTable({
   emptyLabel: string;
 }) {
   if (rows.length === 0) {
-    return <div className="text-text-dim text-[11px] px-3 py-4 text-center">{emptyLabel}</div>;
+    return (
+      <div className="py-8 text-center">
+        <span className="font-mono text-[10px] tracking-[0.18em] uppercase text-text-muted">
+          {emptyLabel}
+        </span>
+      </div>
+    );
   }
 
-  const valClass = variant === "gainers" ? "text-profit" : "text-loss";
+  const valClass = variant === "gainers" ? "text-profit" : "text-accent";
 
   return (
-    <table className="w-full text-[12px] border-collapse">
-      <thead>
-        <tr className="text-text-dim text-[11px]">
-          <th className="text-left font-normal pl-3 pr-1 py-1.5 w-6">#</th>
-          <th className="text-left font-normal px-1 py-1.5">Symbol</th>
-          <th className="text-right font-normal px-1 py-1.5 w-20">Return</th>
-          <th className="text-right font-normal pl-1 pr-3 py-1.5 w-24">P&L</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((h, i) => (
-          <tr key={h.tradingsymbol} className="border-t border-[#111]">
-            <td className="text-text-dim text-[11px] pl-3 pr-1 py-1.5">{i + 1}</td>
-            <td className="text-text-primary font-medium px-1 py-1.5">{h.tradingsymbol}</td>
-            <td className={`${valClass} text-[11px] text-right px-1 py-1.5`}>
-              {formatPercent(h.returnPct)}
-            </td>
-            <td className={`${valClass} text-right pl-1 pr-3 py-1.5`}>
-              {formatPnl(h.pnl)}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <div
+        className={`grid ${COLS} px-4 py-2 border-b border-border font-mono text-[9px] tracking-[0.16em] uppercase text-text-muted`}
+      >
+        <span>#</span>
+        <span>Symbol</span>
+        <span className="text-right">Return</span>
+        <span className="text-right">P&L</span>
+      </div>
+
+      {rows.map((h, i) => (
+        <div
+          key={h.tradingsymbol}
+          className={`grid ${COLS} px-4 py-2.5 items-center text-[12px] ${
+            i !== rows.length - 1 ? "border-b border-border" : ""
+          }`}
+        >
+          <span className="font-mono text-[10px] text-text-dim tabular-nums">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <span className="text-text-display truncate">{h.tradingsymbol}</span>
+          <span className={`text-right font-mono text-[11px] ${valClass}`}>
+            {formatPercent(h.returnPct)}
+          </span>
+          <span className={`text-right font-mono text-[12px] ${valClass}`}>
+            {formatPnl(h.pnl)}
+          </span>
+        </div>
+      ))}
+    </>
   );
 }
 
-export default function TopGainersLosers({ holdings }: { holdings: KiteHolding[] }) {
-  const withReturn = holdings.map((h) => ({
+export default function TopGainersLosers({
+  holdings,
+}: {
+  holdings: KiteHolding[];
+}) {
+  const withReturn: RankedHolding[] = holdings.map((h) => ({
     ...h,
-    returnPct: h.average_price > 0 ? ((h.last_price - h.average_price) / h.average_price) * 100 : 0,
+    returnPct:
+      h.average_price > 0
+        ? ((h.last_price - h.average_price) / h.average_price) * 100
+        : 0,
   }));
 
-  const gainers = [...withReturn].filter((h) => h.returnPct > 0).sort((a, b) => b.returnPct - a.returnPct);
-  const losers = [...withReturn].filter((h) => h.returnPct < 0).sort((a, b) => a.returnPct - b.returnPct);
+  const gainers = [...withReturn]
+    .filter((h) => h.returnPct > 0)
+    .sort((a, b) => b.returnPct - a.returnPct);
+  const losers = [...withReturn]
+    .filter((h) => h.returnPct < 0)
+    .sort((a, b) => a.returnPct - b.returnPct);
 
   return (
-    <div className="grid grid-cols-2 gap-1.5">
-      <div className="bg-bg-surface-alt border border-border">
-        <SectionHeader title="TOP GAINERS" subtitle={`${gainers.length}`} />
-        <RankTable rows={gainers} variant="gainers" emptyLabel="No gainers" />
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="border border-border bg-bg-surface">
+        <SectionHeader
+          title="Top gainers"
+          subtitle={`${String(gainers.length).padStart(2, "0")} above zero`}
+        />
+        <RankedList
+          rows={gainers}
+          variant="gainers"
+          emptyLabel="No gainers"
+        />
       </div>
-      <div className="bg-bg-surface-alt border border-border">
-        <SectionHeader title="TOP LOSERS" subtitle={`${losers.length}`} />
-        <RankTable rows={losers} variant="losers" emptyLabel="No losers" />
+
+      <div className="border border-border bg-bg-surface">
+        <SectionHeader
+          title="Top losers"
+          subtitle={`${String(losers.length).padStart(2, "0")} below zero`}
+        />
+        <RankedList rows={losers} variant="losers" emptyLabel="No losers" />
       </div>
     </div>
   );
