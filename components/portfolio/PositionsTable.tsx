@@ -8,13 +8,21 @@ interface PositionsTableProps {
   positions?: KitePosition[];
 }
 
+const COLS = "grid-cols-[1.4fr_0.7fr_0.5fr_1fr_1fr_1fr]";
+
 export default function PositionsTable({ positions }: PositionsTableProps) {
   if (!positions || positions.length === 0) return null;
 
   return (
-    <div className="bg-bg-surface-alt border border-border">
-      <SectionHeader title="POSITIONS" subtitle={`${positions.length} active`} />
-      <div className="grid grid-cols-[1.5fr_0.8fr_0.5fr_1fr_1fr_1fr] px-3 py-1.5 text-text-dim text-[11px] uppercase tracking-wider border-b border-[#161616]">
+    <div className="border border-border bg-bg-surface">
+      <SectionHeader
+        title="Positions"
+        subtitle={`${positions.length} active`}
+      />
+
+      <div
+        className={`grid ${COLS} px-4 py-2.5 border-b border-border font-mono text-[9px] tracking-[0.16em] uppercase text-text-muted`}
+      >
         <span>Symbol</span>
         <span>Product</span>
         <span className="text-right">Qty</span>
@@ -22,14 +30,41 @@ export default function PositionsTable({ positions }: PositionsTableProps) {
         <span className="text-right">P&L</span>
         <span className="text-right">M2M</span>
       </div>
-      {positions.map((p) => (
-        <div key={p.tradingsymbol + p.exchange + p.product} className={`grid grid-cols-[1.5fr_0.8fr_0.5fr_1fr_1fr_1fr] px-3 py-1.5 text-[12px] border-b border-[#111] items-center ${p.pnl < 0 ? "bg-loss-row" : ""}`}>
-          <span className="text-text-primary font-medium">{p.tradingsymbol}</span>
-          <span className="text-text-dim text-[11px]">{p.product}</span>
-          <span className="text-right text-text-secondary">{p.quantity}</span>
-          <span className="text-right text-text-primary">{formatCurrencyDecimal(p.last_price)}</span>
-          <span className={`text-right ${pnlColor(p.pnl)}`}>{formatPnl(p.pnl)}</span>
-          <span className={`text-right ${pnlColor(p.m2m)}`}>{formatPnl(p.m2m)}</span>
+
+      {positions.map((p, i) => (
+        <div
+          key={p.tradingsymbol + p.exchange + p.product}
+          className={`grid ${COLS} px-4 py-3 items-center text-[13px] hover:bg-bg-raised/40 transition-colors ${
+            i !== positions.length - 1 ? "border-b border-border" : ""
+          }`}
+        >
+          <div className="flex items-baseline gap-2 min-w-0">
+            <span className="text-text-display font-medium truncate">
+              {p.tradingsymbol}
+            </span>
+            <span className="font-mono text-[9px] tracking-[0.14em] uppercase text-text-dim">
+              {p.exchange}
+            </span>
+          </div>
+          <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-text-muted">
+            {p.product}
+          </span>
+          <span className="text-right font-mono text-text-secondary text-[12px]">
+            {p.quantity}
+          </span>
+          <span className="text-right font-mono text-text-primary text-[12px]">
+            {formatCurrencyDecimal(p.last_price)}
+          </span>
+          <span
+            className={`text-right font-mono text-[13px] ${pnlColor(p.pnl)}`}
+          >
+            {formatPnl(p.pnl)}
+          </span>
+          <span
+            className={`text-right font-mono text-[12px] ${pnlColor(p.m2m)}`}
+          >
+            {formatPnl(p.m2m)}
+          </span>
         </div>
       ))}
     </div>
