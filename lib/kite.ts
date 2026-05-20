@@ -1,3 +1,4 @@
+import { buildKiteInstrumentQuery } from "./security";
 import type { KiteHolding, KitePosition, KiteMargins, KiteOrder, KiteTrade } from "./types";
 
 const KITE_API_BASE = "https://api.kite.trade";
@@ -69,7 +70,7 @@ export class KiteClient {
   }
 
   async getLTP(instruments: string[]) {
-    const qs = instruments.map((i) => `i=${i}`).join("&");
+    const qs = buildKiteInstrumentQuery(instruments);
     const res = await fetch(`${KITE_API_BASE}/quote/ltp?${qs}`, {
       headers: {
         "X-Kite-Version": "3",
@@ -95,7 +96,7 @@ export class KiteClient {
   }
 
   async getOHLC(instruments: string[]) {
-    const qs = instruments.map((i) => `i=${i}`).join("&");
+    const qs = buildKiteInstrumentQuery(instruments);
     const res = await fetch(`${KITE_API_BASE}/quote/ohlc?${qs}`, {
       headers: {
         "X-Kite-Version": "3",

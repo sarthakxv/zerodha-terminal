@@ -62,4 +62,22 @@ describe("market-hours", () => {
     const { getWatchlistPollingInterval } = await import("@/lib/market-hours");
     expect(getWatchlistPollingInterval(10)).toBe(false);
   });
+
+  it("getNextSixAMIST returns the next day at 06:00 IST after 06:00 IST", async () => {
+    vi.setSystemTime(new Date("2026-05-20T14:22:37.616Z"));
+    const { getNextSixAMIST } = await import("@/lib/market-hours");
+
+    expect(new Date(getNextSixAMIST()).toISOString()).toBe(
+      "2026-05-21T00:30:00.000Z"
+    );
+  });
+
+  it("getNextSixAMIST returns the same day at 06:00 IST before 06:00 IST", async () => {
+    vi.setSystemTime(new Date("2026-05-20T23:45:00.000Z"));
+    const { getNextSixAMIST } = await import("@/lib/market-hours");
+
+    expect(new Date(getNextSixAMIST()).toISOString()).toBe(
+      "2026-05-21T00:30:00.000Z"
+    );
+  });
 });

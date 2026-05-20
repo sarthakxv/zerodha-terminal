@@ -1,9 +1,14 @@
-import { getAuthenticatedClient, sessionExpiredResponse, errorResponse } from "@/lib/session";
+import { NextRequest } from "next/server";
+import { getAuthenticatedContext, sessionExpiredResponse, errorResponse } from "@/lib/session";
 import { KiteSessionExpiredError } from "@/lib/kite";
+import { rateLimitRequest, RATE_LIMITS } from "@/lib/security";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const client = await getAuthenticatedClient();
+    const { client, session } = await getAuthenticatedContext();
+    const rateLimited = await rateLimitRequest(request, RATE_LIMITS.standard, session.userId);
+    if (rateLimited) return rateLimited;
+
     const data = await client.getOrders();
     return Response.json(data);
   } catch (error) {

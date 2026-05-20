@@ -41,6 +41,11 @@ docs/notes.md
 
 # claude code
 .claude/
+# firecrawl
+.firecrawl/
+
+# local debug scripts
+test-loader.js
 
 # vercel
 .vercel
@@ -48,3 +53,5 @@ docs/notes.md
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/docs

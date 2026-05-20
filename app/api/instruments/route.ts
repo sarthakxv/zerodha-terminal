@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { getSession, sessionExpiredResponse, errorResponse } from "@/lib/session";
 import { searchInstruments } from "@/lib/instruments";
 import { KiteSessionExpiredError } from "@/lib/kite";
+import { rateLimitRequest, RATE_LIMITS } from "@/lib/security";
 
 const MAX_QUERY_LENGTH = 100;
 
@@ -19,6 +20,9 @@ export async function GET(request: NextRequest) {
   try {
     const session = await getSession();
     if (!session.accessToken) return sessionExpiredResponse();
+
+    const rateLimited = await rateLimitRequest(request, RATE_LIMITS.standard, session.userId);
+    if (rateLimited) return rateLimited;
 
     const results = await searchInstruments(query.trim(), session.accessToken);
     return Response.json(results);

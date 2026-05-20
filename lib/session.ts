@@ -19,6 +19,14 @@ export async function getSession(): Promise<IronSession<SessionData>> {
 }
 
 export async function getAuthenticatedClient(): Promise<KiteClient> {
+  const { client } = await getAuthenticatedContext();
+  return client;
+}
+
+export async function getAuthenticatedContext(): Promise<{
+  session: IronSession<SessionData>;
+  client: KiteClient;
+}> {
   const session = await getSession();
 
   if (!session.accessToken) {
@@ -30,7 +38,7 @@ export async function getAuthenticatedClient(): Promise<KiteClient> {
     throw new KiteSessionExpiredError();
   }
 
-  return new KiteClient(session.accessToken);
+  return { session, client: new KiteClient(session.accessToken) };
 }
 
 export function apiResponse(data: unknown, status: number = 200) {

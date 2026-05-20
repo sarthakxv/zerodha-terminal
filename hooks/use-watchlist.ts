@@ -18,6 +18,7 @@ export function useWatchlist() {
 
   // Load from localStorage after mount (avoids hydration mismatch)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setInstruments(loadFromStorage());
   }, []);
 
